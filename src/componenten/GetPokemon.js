@@ -9,9 +9,9 @@ function GetPokemon({endpoint}) {
     useEffect(() => {
         async function fetchPokemon() {
             try {
-                const {response} = await axios.get(endpoint);
-                console.log(response);
-                SetPokemon(response);
+                const {data} = await axios.get(endpoint);
+                console.log(data);
+                SetPokemon(data);
             } catch (e) {
                 console.error(e);
             }

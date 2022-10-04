@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
+import Button from "./componenten/Button";
 
 import GetPokemon from "./componenten/GetPokemon";
 import axios from "axios";
@@ -18,9 +19,9 @@ function App() {
             SetError(false);
 
             try {
-                const {response} = await axios.get(endpoint);
-                console.log(response);
-                SetPokemonz(response);
+                const {data} = await axios.get(endpoint);
+                console.log(data);
+                SetPokemonz(data);
             } catch (e) {
                 console.error(e);
                 SetError(true);
@@ -36,8 +37,22 @@ function App() {
         <div>
             {pokemonz &&
                 <>
+                    <Button
+                        ClickHandler={()=> SetEndpoint(pokemonz.previous)}
+                        Disabled={!pokemonz.previous}
+                        >
+                        Vorige
+                    </Button>
+
+                    <Button
+                        ClickHandler={()=> SetEndpoint(pokemonz.next)}
+                        Disabled={!pokemonz.next}
+                        >
+                        Volgende
+                    </Button>
+
                     {pokemonz.results && pokemonz.results.map((pokemon) => {
-                        return <GetPokemon endpoint={pokemon.url}/>
+                        return <GetPokemon key={pokemon.name} endpoint={pokemon.url}/>
                     })}
 
                 </>
